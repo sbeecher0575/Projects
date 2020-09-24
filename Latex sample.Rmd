@@ -1,0 +1,198 @@
+---
+title: "LaTex Sample (STAT 564 hw 2)"
+author: "Stephen Beecher"
+date: "9/9/2020"
+output: pdf_document
+header-includes:
+  \usepackage{mathtools}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\begin{center}
+These are my answers to a class assignment, but I include this as an example of my use of LaTex and not for the math itself.
+\end{center}
+
+Problems
+
+\begin{enumerate}
+\item  
+\begin{enumerate}
+\item $\displaystyle \frac{(335)_{25}}{(365)_{25}} = 0.1084563$ 
+
+\item $\displaystyle \frac{{30 \choose 3}{335 \choose 22}}{{365 \choose 25}} = .20008$
+
+\item $\displaystyle \frac{{30 \choose x}{335 \choose 25-x}}{{365 \choose 25}} \quad 0\leq x \leq 25$
+
+\end{enumerate}
+
+
+\item
+\begin{enumerate}
+\item $\displaystyle\frac{4}{13} \cdot \frac{3}{12} \cdot \frac{6}{11} \cdot \frac{5}{10} \cdot \frac{3}{9} \cdot \frac{2}{8} = \frac{1}{572} = .001748$
+
+\item $\displaystyle\frac{{4\choose 2}{6\choose 3}{3\choose2}}{{13\choose6}} = .157343$ 
+
+\item 
+\begin{enumerate}
+\item $\displaystyle\left(\frac{4}{13}\right)^2 \cdot \left(\frac{6}{13}\right)^2 \cdot \left(\frac{3}{13}\right)^2 = \frac{5184}{4826809}=.001074$
+
+\item $\displaystyle \frac{(4)_2 \cdot (6)_2 \cdot (3)_2}{\left((13)_2\right)^3} = .000569$
+
+\end{enumerate}
+\end{enumerate}
+
+
+\item Event $A$: testing positive
+
+Event $C$: having dengue
+
+$P(A|C^C) = .1$
+
+$P(A^C|C) = .01$
+
+\begin{enumerate}
+\item $P(A|C) = .99$
+
+\item $P(C) = .01$
+
+$P(A) = P(A|C)P(C) + P(A|C^C)P(C^C)$
+
+$= (.99)(.01) + (.1)(.99)$
+
+$= .1089$
+
+\item $P(C|A) = \displaystyle \frac{P(A \cap C)}{P(A)} = \frac{P(A|C)P(C)}{P(A)}$
+
+$= \displaystyle \frac{(.99)(.01)}{.1089}$
+$=.09091$
+
+\item $P(C) = .5$ now
+
+$P(C|A) = \displaystyle \frac{P(A|C)P(C)}{P(A|C)P(C) + P(A|C^C)P(C^C)}$
+
+$= \displaystyle \frac{(.99)(.5)}{(.99)(.5) + (.1)(.5)}$
+
+$ = .908257$
+
+
+\item 
+
+\end{enumerate}
+\end{enumerate}
+
+```{r echo=FALSE}
+screening <- function(p){.99*p/(.99*p + .1*(1-p))}
+curve(screening,0,1, xlab = "p = P(C) with screening", ylab = "P(C|A)", main = "Probability that an individual has dengue given they test positive")
+```
+
+
+Challenging Problems
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item
+\begin{enumerate}
+
+\item 
+Let $A$ be the event Player $A$ wins.
+
+$P(A) = \lim_{n\to\infty} \frac{1}{2} + \left(\frac{1}{2}\right)^4 + \left(\frac{1}{2}\right)^7 + ... + \left(\frac{1}{2}\right)^{3n-2}$
+
+Since this is a geometric sum with $a_1 = \frac{1}{2}$ and $r=\frac{1}{8}$, the sum
+
+$S=\displaystyle \frac{a_1}{1-r} = \frac{\frac{1}{2}}{1-\frac{1}{8}} = \frac{4}{7}$
+
+Therefore $P(A) = \displaystyle \frac{4}{7}$
+
+\item $P(B)$ is $\frac{1}{2} P(A)$ since every term is multiplied by another $\frac{1}{2}$ since player $A$ goes first (another flip before $B$), so 
+
+$P(B) = \displaystyle \frac{2}{7}$
+
+\item For the same reasons, $P(C) = \frac{1}{2} P(B)$, so
+
+$P(C) = \displaystyle \frac{1}{7}$
+
+\end{enumerate}
+\item
+\begin{enumerate}
+
+\item 
+
+$P(A) = \lim_{n\to\infty} p + p(1-p)^3 + p(1-p)^6 + ... + p(1-p)^{3n}$
+
+This is a geometric sum with $a_1 = p$ and $r=(1-p)^3$, the sum
+
+$S=P(A)=\displaystyle \frac{a_1}{1-r} = \frac{p}{1-(1-p)^3}= \displaystyle \frac{p}{p^3-3p^2+3p}$
+
+$ =\displaystyle \frac{1}{p^2-3p+3}$
+
+\item $P(B)$ is $(1-p) P(A)$ since every term is multiplied by another $(1-p)$ since player $A$ goes first (another tails flip before $B$), so 
+
+$P(B) = \displaystyle \frac{1-p}{p^2-3p+3}$
+
+\item For the same reasons, $P(C) = (1-p) P(B)$, so
+
+$P(C) = \displaystyle \frac{(1-p)^2}{p^2-3p+3}$
+
+\end{enumerate}
+
+\item As $p\to 0$, 
+
+$P(A) \to \frac{1}{3}$
+
+$P(B) \to \frac{1}{3}$
+
+$P(C) \to \frac{1}{3}$
+
+\end{enumerate}
+
+\item
+
+\begin{enumerate}
+
+\item
+
+$f_Y(y) = f_x(g^{-1}(y))\left|\frac{d}{dy}g^{-1}(y)\right|$
+
+where $g(x) = x^p$ for $p >0$.
+
+$g^{-1}(x) = x^{\frac{1}{p}}$
+
+$\displaystyle f_Y(y) = \frac{\beta}{y^{\frac{\beta + 1}{p}}}\left(\frac{1}{p}y^{\frac{1}{p}-1}\right) = \frac{\beta}{py^\frac{\beta + p}{p}},\quad p >0$
+
+\[
+  f_Y(y) =\begin{dcases}
+    0 & \quad x<1\\
+    \frac{\beta}{py^\frac{\beta + p}{p}} & \quad x \geq1
+  \end{dcases}
+\]
+
+$P\{Y>2\} = \int_2^\infty f_Y(y) = \displaystyle \frac{\beta}{p}\int_2^\infty y^{-\frac{\beta + p}{p}}$
+
+$=\lim_{a\to\infty}\left. -y^{-\frac{\beta}{p}} \right|_2^a$
+
+$=\lim_{a\to\infty} -\displaystyle \frac{1}{a^{\frac{\beta}{p}}} + 2^{-\frac{\beta}{p}}$
+
+$= 2^{-\frac{\beta}{p}}$
+
+\item
+
+\begin{tabular}{ |c|c|c| }
+  \hline
+  x &  & $\displaystyle P\{X = x\}$ \\
+  \hline
+  $1$ & $\displaystyle\frac{3!}{(\alpha+3)_3}$ & $\displaystyle\frac{6}{(\alpha+3)_3}$ \\
+  $2$ & $\displaystyle\frac{\alpha(2\cdot1+3\cdot1+2\cdot3 )}{(\alpha+3)_3}$ & $\displaystyle\frac{11\alpha}{(\alpha+3)_3}$ \\
+  $3$ & $\displaystyle\frac{\alpha^2(1+2+3)}{(\alpha+3)_3}$ & $\displaystyle\frac{6\alpha^2}{(\alpha+3)_3}$ \\
+  $4$ & $\displaystyle\frac{\alpha^3}{(\alpha+3)_3}$ & $\displaystyle\frac{\alpha^3}{(\alpha+3)_3}$ \\
+  \hline
+\end{tabular}
+ 
+$EX_4$ = $\displaystyle1\frac{6}{(\alpha+3)_3} + 2\frac{11\alpha}{(\alpha+3)_3} +3\frac{6\alpha^2}{(\alpha+3)_3} +4\frac{\alpha^3}{(\alpha+3)_3}$
+
+$=\displaystyle\frac{4\alpha^3 + 18\alpha^2 + 22\alpha + 6}{(\alpha+3)_3}$
+\end{enumerate}
+\end{enumerate}
