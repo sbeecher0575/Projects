@@ -1,4 +1,4 @@
-# Projects
+# Stephen Beecher Code Samples
 
 ### latex_sample.Rmd
 
