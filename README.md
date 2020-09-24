@@ -12,6 +12,10 @@ This file is a sample of some plots I have made in R, both randomly generated fr
 
 This file is an example of using R as a method to simulate data with statistical algorithms.
 
+### r_sample_regression.Rmd
+
+This is an example of my use of regression to analyze data in different ways. I used fixed and random effects, generalized linear models, and log models to accomodate for different anomalies in the data.
+
 ### r_sample_survey.R
 
 This file uses lines of code from my previous project about the American National Election Study (ANES). Becuase the data file is too large to put onto this repository, the code from this file will not run, because it is missing the data. However, this project was a large part of my knowledge base for survey analysis and large-scale data management, so I thought I would include some of it. In this project I used base R mostly, but I am also familiar with using the Tidyverse to analyze data in R.
