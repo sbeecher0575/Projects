@@ -19,3 +19,7 @@ This file uses lines of code from my previous project about the American Nationa
 ### writer-bot.py
 
 This is one of my python programs, which takes an input .txt file and outputs a .txt file of randomly generated text using a Markov chain algorithm trained by the input file.
+
+### writer-bot-ht.py
+
+This program is extremely similar to writer-bot.py, but it is object oriented and uses hashtables instead of random number generation to achieve the randomness in the markov chain. It is slightly less efficient than writer-bot.py, but it uses more advanced coding techniques, so I wanted to include it in here.
