@@ -22,7 +22,7 @@ ggplot(bikes,
   geom_point(aes(color = SNOW_B)) + 
   geom_line(aes(x = x_vec, y = y_snow)) + 
   geom_line(aes(x = x_vec, y = y_no_snow)) + 
-  labs(title = "Number of Rides per day vs. Average Temperature", x = "Average Temperature (°F)", y = 'Number of Rides', color = "Snow") +
+  labs(title = "Number of Rides per day vs. Average Temperature", x = "Average Temperature (Â°F)", y = 'Number of Rides', color = "Snow") +
   theme(plot.title = element_text(hjust = 0.5))
 
 
