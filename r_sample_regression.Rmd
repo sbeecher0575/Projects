@@ -1,0 +1,199 @@
+---
+title: "Homework 5"
+author: "Stephen Beecher"
+date: "November 25, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1.
+
+##(a)
+
+A model for Reaction time regressing on Days and accounting for the random effect of Subject would best be fit by this random intercept model:
+
+$y = \hat{\beta}_0 + \hat{\beta}_1x + \nu$
+
+lmer(Reaction ~ Days + (1|Subject))
+
+where $\hat{\beta}_0$ and $\hat{\beta}_1$ are the intercept and slope of Days, $y$ is the estimated reaction time, and $\nu$ is the random intercept ~ $N(0, \sigma^2)$ accounting for Subject.
+
+##(b)
+
+```{r include = F}
+library(lme4)
+```
+
+
+```{r echo = F}
+data(sleepstudy)
+
+sleep <- lmer(Reaction ~ Days + (1|Subject), data = sleepstudy)
+
+summary(sleep)
+```
+
+The intercept for Days ($\hat{\beta}_0$) is 251.4051, or the estimate for the Reaction time on Day 0.
+
+The slope for Days ($\hat{\beta}_1$) is 10.4573, or the estimated increase in Reaction time for one increase in Day.
+
+The variance for the random effect of Subject ($\nu$) is 1378.2, meaning that $\nu$ ~ iid $N(0, 1378.2)$.
+
+##(c)
+
+To test whether we can drop the fixed or random effects, I created two new models, one called sleep_randomeffect which dropped the fixed effect, and one called sleep_fixedeffect which dropped the random effect. Using anova tests, we can determine if there are significant differences between these new models and the original. If there are, then we cannot drop these effects.
+
+```{r echo = F}
+sleep_randomeffect <- lmer(Reaction ~ (1|Subject), data = sleepstudy)
+sleep_fixedeffect <- lm(Reaction ~ Days, data = sleepstudy)
+
+anova(sleep_randomeffect, sleep)
+anova(sleep, sleep_fixedeffect)
+```
+
+Based on the p-values of the Chi-Square tests, we conclude that we cannot drop the fixed effect or the random effect (both are less than .05, so we fail to reject both null hypotheses).
+
+
+#2.
+
+##(a)
+
+```{r echo = F}
+setwd("~/College/2019fall/DATA467/hw5")
+
+cars = read.table("car.txt", header = T)
+
+log.model = glm(purchase ~ income + age, data = cars, family = binomial)
+summary(log.model)
+```
+
+MLE of $\beta_0$ = -4.73931,
+MLE of $\beta_{income} = 0.06773$, and 
+MLE of $\beta_{age} = 0.59863$
+
+##(b)
+
+$log\left(\displaystyle\frac{\hat{\pi}}{1-\hat{\pi}}\right) = \hat{\beta}_0 + \hat{\beta}_{income}x_{income} + \hat{\beta}_{age}x_{age}$
+
+Where the $\hat{\beta}$ values are as listed in part (a) and $\hat{\pi}$ is the estimated probability of purchasing a car in the next year.
+
+##(c)
+
+```{r include = F}
+exp(.06773)
+
+```
+
+$exp(\hat{\beta}_{income}) = 1.070076$
+
+For every $1,000 increase in annual family income, the odds that a family will purchase a new car during the next year increase by 7.0076%.
+
+```{r include = F}
+exp(.59863)
+```
+
+$exp(\hat{\beta}_{age}) = 1.819624$
+
+For every 1 year increase in the age of the oldest family automobile, the odds that a family will purchase a new car during the next year increase by 81.9624%.
+
+##(d)
+
+```{r}
+log.odds = -4.73931 + .06773*50 + .59863*3
+odds = exp(log.odds)
+(probability = odds/(1+odds))
+```
+
+##(e)
+
+```{r echo = F}
+par(mfrow = c(1,3))
+plot(log.model, which = 1)
+plot(log.model, which = 3)
+plot(log.model, which = 4)
+```
+
+There are no outliers or influential points, however, points 9, 20, and 29 have slightly larger residuals than the rest.
+
+##(f)
+
+I created a new model with an interaction between income and age:
+
+```{r echo = F}
+interaction.model = glm(purchase ~ income * age, data = cars, family = binomial)
+summary(interaction.model)
+```
+
+Using an anova test, we can determine whether or not this term is significant:
+
+```{r echo = F}
+anova(log.model, interaction.model, test = 'LRT')
+```
+
+
+With a p-value of 0.26, we cannot reject the null hypothesis and conclude that we prefer the model with the interaction term.
+
+#3.
+
+##(a)
+
+```{r include = F}
+library("faraway")
+```
+
+Fitting a linear regression model with Species as the response:
+
+```{r echo = F}
+data(gala)
+
+galapagos.lm <- lm(Species ~ Endemics + Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+summary(galapagos.lm)
+
+hist(gala$Species)
+```
+
+Species (response) is not normally distributed, so we cannot use a normal linear regression. Additionally, Species is a count, so a Poisson response is more applicable here.
+
+
+##(b)
+
+```{r echo = F}
+galapagos.glm <- glm(Species ~ Endemics + Area + Elevation + Nearest + Scruz + Adjacent, data = gala, family = poisson)
+summary(galapagos.glm)
+```
+
+$\hat{\beta}_{Elevation} = 2.638e-04$
+
+```{r}
+exp(2.638e-04)
+```
+
+For every 1 m increase in the highest elevation of the island, the number of plant species found on the island increases by 0.0264%.
+
+$\hat{\beta}_{Nearest} = 1.048e-02$
+
+```{r}
+exp(1.048e-02)
+```
+
+For every 1 m increase in distance from the nearest island, the number of plant species found on the island increases by 1.0535%.
+
+##(c)
+
+```{r echo = F}
+hist(gala$Species, breaks = 100, freq = F)
+```
+
+From this histogram, we can see that this data is not normal. Because it is count data, the Poisson distribution is a better fit.
+
+```{r echo = F}
+par(mfrow = c(1,2))
+plot(galapagos.lm, which = 1)
+plot(galapagos.glm, which = 1)
+```
+
+On the left is the normal model, and on the right is the poisson model.
+The residuals for the poisson model are more randomly distributed about the fitted values than the normal model, so the poisson is a better fit.
