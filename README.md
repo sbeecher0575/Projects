@@ -1,5 +1,7 @@
 # Stephen Beecher Code Samples
 
+Here is a series of code samples I created to generally encompass my abilities. Each topic is separated into a different file as described below to simplify focusing on certain aspects.
+
 ### latex_sample.Rmd
 
 This file is an excerpt from a recent homework assignment (Theory of Probability), as an example of my knowledge of LaTex. Since these are answers to questions not listed, the math may not make much sense, but this is directed towards my use of LaTex to create tables, functions, etc. rather than my knowledge of statistics. The knit .pdf of the R Markdown file is also included in this repository.
